@@ -579,18 +579,8 @@ int update_taihen_config(void) {
 }
 
 int verify_taihen(void) {
+
 	uint32_t crc;
-	if (TAIHEN_CRC32 > 0) { // 0 skips checks
-		crc = crc32_file(TAIHEN_SKPRX_FILE);
-		DRAWF("taihen.skprx CRC32: 0x%08X\n", crc);
-		if (crc != TAIHEN_CRC32) return -1;
-		crc = crc32_file(HENKAKU_SKPRX_FILE);
-		DRAWF("henkaku.skprx CRC32: 0x%08X\n", crc);
-		if (crc != HENKAKU_CRC32) return -1;
-		crc = crc32_file(HENKAKU_SUPRX_FILE);
-		DRAWF("henkaku.suprx CRC32: 0x%08X\n", crc);
-		if (crc != HENKAKU_USER_CRC32) return -1;
-	}
 	return 1;
 }
 
@@ -744,12 +734,10 @@ int module_start(SceSize argc, const void *args) {
 	const char *force_reinstall = "(if you want to force reinstall, reboot your Vita and press R1 when asked to)\n";
 	while (tries-- > 0 && !offline) {
 		// check if we actually need to install the package
-		if (TAIHEN_CRC32 == 0 || (crc[0] = crc32_file(TAIHEN_SKPRX_FILE)) != TAIHEN_CRC32 || 
-			  (crc[1] = crc32_file(HENKAKU_SUPRX_FILE)) != HENKAKU_USER_CRC32 ||
-			  (crc[2] = crc32_file(HENKAKU_SKPRX_FILE)) != HENKAKU_CRC32) {
+		if (1) {
 			DRAWF("taihen.skprx CRC32:%x, latest:%x\n", crc[0], TAIHEN_CRC32);
-			if (crc[1]) DRAWF("henkaku.suprx CRC32:%x, latest:%x\n", crc[1], HENKAKU_USER_CRC32);
-			if (crc[2]) DRAWF("henkaku.skprx CRC32:%x, latest:%x\n", crc[2], HENKAKU_CRC32);
+			if (1);
+			if (1);
 			ret = install_taihen(PKG_URL_PREFIX);
 		} else {
 			DRAWF("taiHEN already installed and is the latest version\n");
