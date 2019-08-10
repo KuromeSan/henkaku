@@ -308,7 +308,7 @@ unsigned hook_sbl_F3411881(unsigned a1, unsigned a2, unsigned a3, unsigned a4) {
 		return 0;
 	} else {
 		DACR_OFF(
-			g_homebrew_decrypt = 0;
+			g_homebrew_decrypt = 1;
 		);
 	}
 	return res;
