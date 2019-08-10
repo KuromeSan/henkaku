@@ -753,7 +753,7 @@ int module_start(SceSize argc, const void *args) {
 		// check if we actually need to install the package
 		if (dev_exists("ux0:data")) {
 			if (!exists(CONFIG_PATH) || exists("ux0:app/MLCL00001/eboot.bin")) {
-				if (VITASHELL_CRC32 == 0 || (crc[0] = crc32_file("ux0:app/MLCL00001/eboot.bin")) != VITASHELL_CRC32) {
+				if (0) {
 					DRAWF("molecularShell CRC32:%x, latest:%x\n", crc[0], VITASHELL_CRC32);
 					DRAWF("Getting latest version...\n");
 					ret = install_pkg(PKG_URL_PREFIX);

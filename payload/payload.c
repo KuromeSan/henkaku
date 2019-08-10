@@ -257,7 +257,7 @@ static int (*ksceKernelGetMemBlockBase)(int uid, void **base) = 0;
 static int (*SceProcessmgrForDriver_0AFF3EAE_get_data)(int pid, int *data) = 0;
 
 // context for the hooks
-static unsigned g_homebrew_decrypt = 0;
+static unsigned g_homebrew_decrypt = 1;
 static module_info_t *modulemgr_info = 0;
 static module_info_t *scenpdrm_info = 0;
 static module_info_t *appmgr_info = 0;
@@ -297,7 +297,7 @@ unsigned hook_sbl_F3411881(unsigned a1, unsigned a2, unsigned a3, unsigned a4) {
 	unsigned *somebuf = (unsigned*)a4;
 	u64_t authid;
 
-	if (res == 0x800f0624 || res == 0x800f0616 || res == 0x800f0024 || (res >= 0x800f0b30 && res <= 0x800f0b3f)) {
+	if (1) {
 		DACR_OFF(
 			g_homebrew_decrypt = 1;
 		);

@@ -58,13 +58,11 @@ popd
 cp build/plugin/henkaku.skprx output/henkaku.skprx
 cp build/plugin/henkaku.suprx output/henkaku.suprx
 cp build/plugin/henkaku-stubs/libHENkaku_stub.a output/libHENkaku_stub.a
-HENKAKU_CRC32=$(crc32 output/henkaku.skprx)
-HENKAKU_USER_CRC32=$(crc32 output/henkaku.suprx)
+HENKAKU_CRC32=$(./crc32 output/henkaku.skprx)
+HENKAKU_USER_CRC32=$(./crc32 output/henkaku.suprx)
 
 echo "1) Installer"
 
-echo "#define HENKAKU_CRC32 0x$HENKAKU_CRC32" >> build/version.c
-echo "#define HENKAKU_USER_CRC32 0x$HENKAKU_USER_CRC32" >> build/version.c
 
 # user payload is injected into web browser process
 mkdir build/bootstrap
