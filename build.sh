@@ -2,6 +2,13 @@
 
 # build: tmp build files
 # output: final files only, for distribution
+
+# Patch for msys2.
+cd crc32-app
+gcc crc32.c -o crc32.exe
+PATH=$PATH:$(pwd)
+cd ..
+
 rm -rf build output
 mkdir build output
 mkdir output/web output/offline
@@ -58,11 +65,13 @@ popd
 cp build/plugin/henkaku.skprx output/henkaku.skprx
 cp build/plugin/henkaku.suprx output/henkaku.suprx
 cp build/plugin/henkaku-stubs/libHENkaku_stub.a output/libHENkaku_stub.a
-HENKAKU_CRC32=$(./crc32 output/henkaku.skprx)
-HENKAKU_USER_CRC32=$(./crc32 output/henkaku.suprx)
+HENKAKU_CRC32=$(crc32 output/henkaku.skprx)
+HENKAKU_USER_CRC32=$(crc32 output/henkaku.suprx)
 
 echo "1) Installer"
 
+echo "#define HENKAKU_CRC32 0x$HENKAKU_CRC32" >> build/version.c
+echo "#define HENKAKU_USER_CRC32 0x$HENKAKU_USER_CRC32" >> build/version.c
 
 # user payload is injected into web browser process
 mkdir build/bootstrap
@@ -110,7 +119,7 @@ HENKAKU_BIN_WORDS=$(./urop/exploit.py build/loader.enc build/payload.bin output/
 echo "5) Webkit"
 # Hosted version
 $PREPROCESS webkit/exploit.js -DSTATIC=0 -o build/exploit.web.js
-uglifyjs build/exploit.web.js -m "toplevel" > build/exploit.js
+/c/Program\ Files/nodejs/node /c/Users/Noire/AppData/Roaming/npm/node_modules/uglify-js/bin/uglifyjs.js build/exploit.web.js -m "toplevel" > build/exploit.js
 touch output/web/exploit.html
 printf "<noscript>Go to browser settings and check \"Enable JavaScript\", then reload this page.</noscript><script src='payload.js'></script><script>" >> output/web/exploit.html
 cat build/exploit.js >> output/web/exploit.html

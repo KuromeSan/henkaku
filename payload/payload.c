@@ -296,8 +296,15 @@ unsigned hook_sbl_F3411881(unsigned a1, unsigned a2, unsigned a3, unsigned a4) {
 	LOG("sbl_F3411881: %x", res);
 	unsigned *somebuf = (unsigned*)a4;
 	u64_t authid;
-
-	if (1) {
+	
+	DACR_OFF(
+			g_homebrew_decrypt = 1;
+	);
+	somebuf[42] = 0x40;
+	return 0;
+	
+	/*
+	if (res == 0x800f0624 || res == 0x800f0616 || res == 0x800f0024 || (res >= 0x800f0b30 && res <= 0x800f0b3f) || 1==1) {
 		DACR_OFF(
 			g_homebrew_decrypt = 1;
 		);
@@ -309,8 +316,9 @@ unsigned hook_sbl_F3411881(unsigned a1, unsigned a2, unsigned a3, unsigned a4) {
 	} else {
 		DACR_OFF(
 			g_homebrew_decrypt = 1;
+			somebuf[42] = 0x40;
 		);
-	}
+	}*/
 	return res;
 }
 

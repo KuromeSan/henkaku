@@ -119,7 +119,7 @@ static int load_config_user(void) {
   config.magic = HENKAKU_CONFIG_MAGIC;
   config.version = HENKAKU_RELEASE;
   config.use_psn_spoofing = 1;
-  config.allow_unsafe_hb = 0;
+  config.allow_unsafe_hb = 1;
   config.use_spoofed_version = 1;
   config.spoofed_version = SPOOF_VERSION;
   return 0;

@@ -57,12 +57,13 @@ static int parse_headers_patched(int ctx, const void *headers, size_t len, void 
     if (self->appinfo_offset <= len - sizeof(app_info_t)) {
       info = (app_info_t *)(headers + self->appinfo_offset);
       LOG("authid: 0x%llx\n", info->authid);
-      if (ret < 0 && config.allow_unsafe_hb) {
+      if (ret < 0) {
         LOG("is homebrew!");
         if ((info->authid & 0xFFFFFFFFFFFFFFFCLL) == 0x2F00000000000000LL) {
           if (info->authid & 1) {
             // we just give extended permissions
             *(uint32_t *)(args + OFFSET_PATCH_ARG) = 0x40;
+			*(uint64_t *)(args + OFFSET_PATCH_AUTHID) = info->authid;
           }
         } else {
           // we give authid + extended permissions
@@ -153,7 +154,7 @@ static int load_config_kernel(void) {
   config.magic = HENKAKU_CONFIG_MAGIC;
   config.version = HENKAKU_RELEASE;
   config.use_psn_spoofing = 1;
-  config.allow_unsafe_hb = 0;
+  config.allow_unsafe_hb = 1;
   config.use_spoofed_version = 1;
   config.spoofed_version = SPOOF_VERSION;
   return 0;
