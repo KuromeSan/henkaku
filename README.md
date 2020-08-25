@@ -1,3 +1,5 @@
+# Exmaple:
+  http://vitaticks.tk/henkek
 # Build
 
 Only Linux is supported. You will need:
