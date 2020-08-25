@@ -119,8 +119,33 @@ HENKAKU_BIN_WORDS=$(./urop/exploit.py build/loader.enc build/payload.bin output/
 echo "5) Webkit"
 # Hosted version
 $PREPROCESS webkit/exploit.js -DSTATIC=0 -o build/exploit.web.js
+# Change this to your path, getting this to work on windows was a bitch
 /c/Program\ Files/nodejs/node /c/Users/Noire/AppData/Roaming/npm/node_modules/uglify-js/bin/uglifyjs.js build/exploit.web.js -m "toplevel" > build/exploit.js
 touch output/web/exploit.html
 printf "<noscript>Go to browser settings and check \"Enable JavaScript\", then reload this page.</noscript><script src='payload.js'></script><script>" >> output/web/exploit.html
 cat build/exploit.js >> output/web/exploit.html
 printf "</script>" >> output/web/exploit.html
+
+# Download Latest Henkaku Payload 
+mkdir output/web/pkg
+cd output/web/pkg
+wget https://henkaku.xyz/go/pkg/henkaku.skprx
+wget https://henkaku.xyz/go/pkg/henkaku.suprx
+wget https://henkaku.xyz/go/pkg/taihen.skprx
+wget https://henkaku.xyz/go/pkg/eboot.bin
+mkdir sce_sys
+cd sce_sys
+wget https://henkaku.xyz/go/pkg/sce_sys/param.sfo
+wget https://henkaku.xyz/go/pkg/sce_sys/icon0.png
+mkdir livearea
+cd livearea
+wget https://henkaku.xyz/go/pkg/sce_sys/livearea/bg.png
+wget https://henkaku.xyz/go/pkg/sce_sys/livearea/install_button.png
+wget https://henkaku.xyz/go/pkg/sce_sys/livearea/startup.png
+wget https://henkaku.xyz/go/pkg/sce_sys/livearea/template.xml
+cd ..
+mkdir package
+cd package
+wget https://henkaku.xyz/go/pkg/sce_sys/package/head.bin
+
+
